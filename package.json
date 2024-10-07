@@ -3,8 +3,8 @@
      "version": "1.0.0",
      "private": true,
      "scripts": {
-          "start": "concurrently \"npm run server\" \"npm run client\"",
-          "server": "cd server && npm install && nodemon server.js",
+          "start": "concurrently \"npm run api\" \"npm run client\"",
+          "api": "cd api && npm install && nodemon api.js",
           "client": "cd client && npm install && npm start"
      },
      "dependencies": {
