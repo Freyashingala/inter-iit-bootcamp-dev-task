@@ -4,6 +4,7 @@ const authRoutes = require("./routes/authroutes");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const dotenv = require("dotenv");
+const mongoose = require('mongoose');
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 const multer = require("multer");
 const fs = require('fs');
@@ -12,6 +13,11 @@ const Chat = require('./models/Chat');  // Import Chat model
 
 dotenv.config();
 connectDB();
+
+// Connect to MongoDB
+mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+    .then(() => console.log('MongoDB connected'))
+    .catch(err => console.error('MongoDB connection error:', err));
 
 const app = express();
 app.use(cors()); // Ensures your frontend can access the backend

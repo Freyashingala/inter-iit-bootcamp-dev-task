@@ -8,8 +8,15 @@
      ],
      "rewrites": [
          {
-           "source": "/(.*)",
-           "destination": "api/index.js"
+               "source": "/(.*)",
+               "destination": "api/index.js"
          }
-       ]
- }
+     ],
+
+     "routes": [
+          {
+               "src": "/api/auth/login",
+               "dest": "/api/auth/login.js"
+          }
+     ]
+}
