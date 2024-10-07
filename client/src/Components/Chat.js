@@ -24,7 +24,7 @@ const Chat = () => {
   const chatEndRef = useRef(null);
   const navigate = useNavigate();
   
-  const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:5000';
+  const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:5000' || inter-iit-bootcamp-dev-task-backend.vercel.app;
 
   // Function to submit question to the server
   const askQuestion = async () => {
