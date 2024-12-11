@@ -4,6 +4,7 @@ const authRoutes = require("./routes/authroutes");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const dotenv = require("dotenv");
+const mongoose = require('mongoose');
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 const multer = require("multer");
 const fs = require('fs');
@@ -13,11 +14,25 @@ const Chat = require('./models/Chat');  // Import Chat model
 dotenv.config();
 connectDB();
 
+// Connect to MongoDB
+mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+    .then(() => console.log('MongoDB connected'))
+    .catch(err => console.error('MongoDB connection error:', err));
+
 const app = express();
-app.use(cors()); // Ensures your frontend can access the backend
-app.use(bodyParser.json());
+app.use(cors({
+    origin: 'https://inter-iit-bootcamp-dev-task-frontend.vercel.app', // Replace with your Vercel frontend URL
+    methods: ['GET', 'POST', 'PUT', 'DELETE'], // Specify allowed methods
+    credentials: true, // If you use cookies or authentication
+}));
+app.use(express.json());
+app.get('/', (req, res) => res.send('API is running...'));
 app.use("/api/auth", authRoutes);
 
+const uploadsDir = path.join(__dirname, 'uploads');
+if (!fs.existsSync(uploadsDir)) {
+    fs.mkdirSync(uploadsDir);
+}
 // Initialize multer for file uploads
 const upload = multer({ dest: 'uploads/' });
 const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY);
