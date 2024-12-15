@@ -1,8 +1,15 @@
 {
   "scripts": {
+<<<<<<< HEAD
     "start": "node index.js",
     "dev": "nodemon index.js"
   },
+=======
+  "start": "node index.js",
+  "dev": "nodemon index.js"
+  },
+
+>>>>>>> e2151f3e866534b49eb84331e7dcf945c7c8268c
   "dependencies": {
     "@google/generative-ai": "^0.21.0",
     "axios": "^1.7.7",
