@@ -1,6 +1,6 @@
 const express = require("express");
 const connectDB = require("./config/db");
-const authRoutes = require("./routes/authroutes");
+const authRoutes = require("./routes/authRoutes");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const dotenv = require("dotenv");
@@ -9,7 +9,7 @@ const { GoogleGenerativeAI } = require("@google/generative-ai");
 const multer = require("multer");
 const fs = require('fs');
 const path = require('path');
-const Chat = require('./models/Chat');  // Import Chat model
+const Chat = require('./models/Chat');
 
 dotenv.config();
 connectDB();
@@ -20,10 +20,20 @@ mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopol
     .catch(err => console.error('MongoDB connection error:', err));
 
 const app = express();
-app.use(cors()); // Ensures your frontend can access the backend
-app.use(bodyParser.json());
+app.use(cors({
+    origin: 'https://inter-iit-bootcamp-dev-task-frontend.vercel.app',
+    methods: ['GET', 'POST'],
+    credentials: true,
+}));
+
+app.use(express.json());
+app.get('/', (req, res) => res.send('API is running...'));
 app.use("/api/auth", authRoutes);
 
+const uploadsDir = path.join(__dirname, 'uploads');
+if (!fs.existsSync(uploadsDir)) {
+    fs.mkdirSync(uploadsDir);
+}
 // Initialize multer for file uploads
 const upload = multer({ dest: 'uploads/' });
 const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY);

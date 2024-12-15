@@ -9,7 +9,7 @@ export const AuthProvider = ({ children }) => {
     // Register function
     const register = async (username, password) => {
         try {
-            const response = await axios.post("/api/auth/register", { username, password });
+            const response = await axios.post("/server/auth/register", { username, password });
             return response; // Return the full response to be handled in the frontend
         } catch (error) {
             // Handle error properly and rethrow it for handling in the frontend
